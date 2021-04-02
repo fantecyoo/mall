@@ -1,30 +1,32 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div id="app">
+    <!-- <keep-alive><router-view></router-view></keep-alive> -->
+      <router-view v-slot="{ Component }">
+    <keep-alive exclude="Detail">
+      <component :is="Component" />
+    </keep-alive>
+  </router-view>
+    <main-tab-bar></main-tab-bar>
   </div>
-  <router-view/>
 </template>
 
+<script>
+import MainTabBar from './components/content/Maintabbar/maintabbar'
+export default {
+  components:{
+    MainTabBar
+  },
+  filters:{
+    sellCountFilter: function (value) {
+        if (value < 10000) return value;
+        return (value/10000).toFixed(1) + '万'
+      }
+  }
+}
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+@import url('assets/css/base.css');
 
-#nav {
-  padding: 30px;
-}
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
